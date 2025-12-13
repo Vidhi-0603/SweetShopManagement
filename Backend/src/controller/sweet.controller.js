@@ -1,31 +1,34 @@
+const {
+  createSweet,
+  getAllSweets,
+  searchSweets,
+  updateSweet,
+  deleteSweet,
+} = require("../services/sweet.service");
+
 const add_Sweet = async (req, res) => {
-  return res.status(201).json({
-    message: "Sweet added successfully",
-  });
+  const sweet = await createSweet(req.body);
+  res.status(201).json(sweet);
 };
 
 const get_Sweets = async (req, res) => {
-  return res.status(200).json({
-    sweets: [],
-  });
+  const sweets = await getAllSweets();
+  res.status(200).json({ sweets });
 };
 
 const search_Sweets = async (req, res) => {
-  return res.status(200).json({
-    sweets: [],
-  });
+  const sweets = await searchSweets(req.query);
+  res.status(200).json({ sweets });
 };
 
 const update_Sweet = async (req, res) => {
-  return res.status(200).json({
-    message: "Sweet updated successfully",
-  });
+  const sweet = await updateSweet(req.params.id, req.body);
+  res.status(200).json(sweet);
 };
 
 const delete_Sweet = async (req, res) => {
-  return res.status(200).json({
-    message: "Sweet deleted successfully",
-  });
+  await deleteSweet(req.params.id);
+  res.status(200).json({ message: "Sweet deleted successfully" });
 };
 
 module.exports = {

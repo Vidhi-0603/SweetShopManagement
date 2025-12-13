@@ -1,3 +1,9 @@
+jest.mock("../../../src/models/Sweets.model", () => ({
+  create: jest.fn(),
+  find: jest.fn(),
+  findByIdAndUpdate: jest.fn(),
+  findByIdAndDelete: jest.fn(),
+}));
 const {
   createSweet,
   getAllSweets,
@@ -5,11 +11,7 @@ const {
   updateSweet,
   deleteSweet,
 } = require("../../../src/services/sweet.service");
-
-
-jest.mock("../../../src/models/Sweet.model");
-
-const Sweet = require("../../../src/models/Sweet.model");
+const Sweet = require("../../../src/models/Sweets.model");
 
 
 describe("Sweet Service", () => {

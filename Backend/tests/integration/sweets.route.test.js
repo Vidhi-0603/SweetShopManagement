@@ -1,5 +1,3 @@
-const request = require("supertest");
-const app = require("../../app");
 
 /**
  * Mock the controller functions
@@ -19,6 +17,9 @@ jest.mock("../../src/controller/sweet.controller", () => ({
 
   delete_Sweet: (req, res) => res.status(200).json({ message: "Sweet deleted successfully" }),
 }));
+
+const request = require("supertest");
+const app = require("../../app");
 
 describe("Sweet Routes", () => {
   describe("POST /api/sweets", () => {
