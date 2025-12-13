@@ -3,6 +3,7 @@ jest.mock("../../../src/models/Sweets.model", () => ({
   find: jest.fn(),
   findByIdAndUpdate: jest.fn(),
   findByIdAndDelete: jest.fn(),
+  findById: jest.fn(),
 }));
 const {
   createSweet,
@@ -10,6 +11,8 @@ const {
   searchSweets,
   updateSweet,
   deleteSweet,
+  purchaseSweet,
+  restockSweet,
 } = require("../../../src/services/sweet.service");
 const Sweet = require("../../../src/models/Sweets.model");
 

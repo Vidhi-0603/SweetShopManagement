@@ -26,10 +26,15 @@ jest.mock("../../src/controller/sweet.controller", () => ({
   update_Sweet: (req, res) => res.status(200).json({ message: "Sweet updated successfully" }),
 
   delete_Sweet: (req, res) => res.status(200).json({ message: "Sweet deleted successfully" }),
+
+  purchase_Sweet: (req, res) => res.status(200).json({ message: "Sweet purchased successfully" }),
+
+  restock_Sweet: (req, res) => res.status(200).json({ message: "Sweet restocked successfully" }),
 }));
 
 const request = require("supertest");
 const app = require("../../app");
+const { purchase_Sweet } = require("../../src/controller/sweet.controller");
 
 describe("Sweet Routes", () => {
   describe("POST /api/sweets", () => {

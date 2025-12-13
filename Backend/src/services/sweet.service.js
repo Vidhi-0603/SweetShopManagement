@@ -30,10 +30,32 @@ const deleteSweet = async (id) => {
   return Sweet.findByIdAndDelete(id);
 };
 
+const purchaseSweet = async (id, qty) => {
+  const sweet = await Sweet.findById(id);
+  if (!sweet) throw new Error("Sweet not found");
+
+  sweet.quantity -= qty;
+  await sweet.save();
+
+  return sweet;
+};
+
+const restockSweet = async (id, qty) => {
+  const sweet = await Sweet.findById(id);
+  if (!sweet) throw new Error("Sweet not found");
+
+  sweet.quantity += qty;
+  await sweet.save();
+
+  return sweet;
+};
+
 module.exports = {
   createSweet,
   getAllSweets,
   searchSweets,
   updateSweet,
   deleteSweet,
+  purchaseSweet,
+  restockSweet,
 };
