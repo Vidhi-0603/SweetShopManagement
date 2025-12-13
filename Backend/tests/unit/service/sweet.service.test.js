@@ -74,4 +74,27 @@ describe("Sweet Service", () => {
       expect(res._id).toBe("1");
     });
   });
+  
+  describe("Inventory Service", () => {
+    test("purchaseSweet reduces quantity of sweet", async () => {
+      Sweet.findById.mockResolvedValue({
+        quantity: 10,
+        save: jest.fn(),
+      });
+
+      const res = await purchaseSweet("123", 2);
+      expect(res.quantity).toBe(8);
+    });
+
+    test("restockSweet increases quantity of that sweet", async () => {
+      Sweet.findById.mockResolvedValue({
+        quantity: 5,
+        save: jest.fn(),
+      });
+
+      const res = await restockSweet("123", 5);
+      expect(res.quantity).toBe(10);
+    });
+  });
+
 });

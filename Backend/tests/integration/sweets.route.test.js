@@ -84,4 +84,28 @@ describe("Sweet Routes", () => {
       expect(res.body.message).toBe("Sweet deleted successfully");
     });
   });
+  describe("Inventory Routes", () => {
+    describe("POST /api/sweets/:id/purchase", () => {
+      test("should purchase a sweet and reduce quantity", async () => {
+        const res = await request(app)
+          .post("/api/sweets/123/purchase")
+          .send({ quantity: 2 });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Sweet purchased successfully");
+      });
+    });
+
+    describe("POST /api/sweets/:id/restock", () => {
+      test("should restock a sweet (admin only)", async () => {
+        const res = await request(app)
+          .post("/api/sweets/123/restock")
+          .send({ quantity: 10 });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.message).toBe("Sweet restocked successfully");
+      });
+    });
+  });
+
 });
