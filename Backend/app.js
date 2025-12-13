@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 const authRoutes = require("./src/routes/auth.route");
-const sweetRoutes = require("./src/routes/sweet.route");
+const sweetRoutes = require("./src/routes/sweets.route");
 
 app.use(express.json());
 

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const controller = require("../controller/sweet.controller");
+const { add_Sweet,get_Sweets,search_Sweets,update_Sweet,delete_Sweet} = require("../controller/sweet.controller");
 
-router.post("/", controller.add_Sweet);
-router.get("/", controller.get_Sweets);
-router.get("/search", controller.search_Sweets);
-router.put("/:id", controller.update_Sweet);
-router.delete("/:id", controller.delete_Sweet);
+router.post("/", add_Sweet);
+router.get("/", get_Sweets);
+router.get("/search", search_Sweets);
+router.put("/:id", update_Sweet);
+router.delete("/:id", delete_Sweet);
 
 module.exports = router;
