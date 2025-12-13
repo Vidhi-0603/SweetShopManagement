@@ -15,7 +15,7 @@ const {
   restockSweet,
 } = require("../../../src/services/sweet.service");
 const Sweet = require("../../../src/models/Sweets.model");
-
+const validId = "507f191e810c19729de860ea";
 
 describe("Sweet Service", () => {
   describe("createSweet", () => {
@@ -41,8 +41,9 @@ describe("Sweet Service", () => {
 
   describe("getAllSweets", () => {
     test("should return all sweets", async () => {
-      Sweet.find.mockResolvedValue([{ name: "Barfi" }]);
-
+      Sweet.find.mockReturnValue({
+        lean: jest.fn().mockResolvedValue([{ name: "Barfi" }]),
+      });
       const res = await getAllSweets();
       expect(res.length).toBe(1);
     });
@@ -50,8 +51,9 @@ describe("Sweet Service", () => {
 
   describe("searchSweets", () => {
     test("should search sweets by name", async () => {
-      Sweet.find.mockResolvedValue([{ name: "Rasgulla" }]);
-
+      Sweet.find.mockReturnValue({
+        lean: jest.fn().mockResolvedValue([{ name: "Rasgulla" }]),
+      });
       const res = await searchSweets({ name: "Rasgulla" });
       expect(res[0].name).toBe("Rasgulla");
     });
@@ -64,7 +66,7 @@ describe("Sweet Service", () => {
         price: 60,
       });
 
-      const res = await updateSweet("1", { price: 60 });
+      const res = await updateSweet(validId, { price: 60 });
       expect(res.price).toBe(60);
     });
   });
@@ -73,11 +75,11 @@ describe("Sweet Service", () => {
     test("should delete a sweet", async () => {
       Sweet.findByIdAndDelete.mockResolvedValue({ _id: "1" });
 
-      const res = await deleteSweet("1");
+      const res = await deleteSweet(validId);
       expect(res._id).toBe("1");
     });
   });
-  
+
   describe("Inventory Service", () => {
     test("purchaseSweet reduces quantity of sweet", async () => {
       Sweet.findById.mockResolvedValue({
@@ -99,5 +101,4 @@ describe("Sweet Service", () => {
       expect(res.quantity).toBe(10);
     });
   });
-
 });

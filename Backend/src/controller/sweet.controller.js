@@ -10,8 +10,17 @@ const {
 
 const add_Sweet = async (req, res, next) => {
   try {
+    const { name, category, price, quantity } = req.body;
+
+    if (!name || !category || price == null || quantity == null) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     const sweet = await createSweet(req.body);
-    res.status(201).json({ message: "Sweet added successfully", sweet });
+
+    return res
+      .status(201)
+      .json({ message: "Sweet added successfully", sweet });
   } catch (err) {
     next(err);
   }
@@ -20,7 +29,8 @@ const add_Sweet = async (req, res, next) => {
 const get_Sweets = async (req, res, next) => {
   try {
     const sweets = await getAllSweets();
-    res.status(200).json({ sweets });
+
+    return res.status(200).json({ sweets });
   } catch (err) {
     next(err);
   }
@@ -28,8 +38,13 @@ const get_Sweets = async (req, res, next) => {
 
 const search_Sweets = async (req, res, next) => {
   try {
+    if (!Object.keys(req.query).length) {
+      return res.status(400).json({ message: "Search query required" });
+    }
+
     const sweets = await searchSweets(req.query);
-    res.status(200).json({ sweets });
+
+    return res.status(200).json({ sweets });
   } catch (err) {
     next(err);
   }
@@ -37,8 +52,13 @@ const search_Sweets = async (req, res, next) => {
 
 const update_Sweet = async (req, res, next) => {
   try {
+    if (!Object.keys(req.body).length) {
+      return res.status(400).json({ message: "Update data required" });
+    }
+
     await updateSweet(req.params.id, req.body);
-    res.status(200).json({ message: "Sweet updated successfully" });
+
+    return res.status(200).json({ message: "Sweet updated successfully" });
   } catch (err) {
     next(err);
   }
@@ -47,22 +67,45 @@ const update_Sweet = async (req, res, next) => {
 const delete_Sweet = async (req, res, next) => {
   try {
     await deleteSweet(req.params.id);
-    res.status(200).json({ message: "Sweet deleted successfully" });
+
+    return res.status(200).json({ message: "Sweet deleted successfully" });
   } catch (err) {
     next(err);
   }
 };
 
 const purchase_Sweet = async (req, res) => {
-  const { quantity } = req.body;
-  await purchaseSweet(req.params.id, quantity);
-  res.status(200).json({ message: "Sweet purchased successfully" });
+  try {
+    const { quantity } = req.body;
+
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Invalid quantity" });
+    }
+
+    await purchaseSweet(req.params.id, quantity);
+
+    return res.status(200).json({ message: "Sweet purchased successfully" });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: error.message || "Purchase failed" });
+  }
 };
 
 const restock_Sweet = async (req, res) => {
-  const { quantity } = req.body;
-  await restockSweet(req.params.id, quantity);
-  res.status(200).json({ message: "Sweet restocked successfully" });
+  try {
+    const { quantity } = req.body;
+
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: "Invalid quantity" });
+    }
+
+    await restockSweet(req.params.id, quantity);
+
+    return res.status(200).json({ message: "Sweet restocked successfully" });
+  } catch (error) {
+    return res.status(400).json({ message: error.message || "Restock failed" });
+  }
 };
 
 module.exports = {
