@@ -1,23 +1,33 @@
 const Sweet = require("../models/Sweets.model");
 
-const createSweet = async (data) => {
-  return await Sweet.create(data);
+const createSweet = async ({ name, category, price, quantity }) => {
+  return Sweet.create({ name, category, price, quantity });
 };
 
 const getAllSweets = async () => {
-  return await Sweet.find();
+  return Sweet.find();
 };
 
-const searchSweets = async (query) => {
-  return await Sweet.find(query);
+const searchSweets = async (filters) => {
+  const query = {};
+
+  if (filters.name) query.name = filters.name;
+  if (filters.category) query.category = filters.category;
+  if (filters.minPrice || filters.maxPrice) {
+    query.price = {};
+    if (filters.minPrice) query.price.$gte = filters.minPrice;
+    if (filters.maxPrice) query.price.$lte = filters.maxPrice;
+  }
+
+  return Sweet.find(query);
 };
 
 const updateSweet = async (id, data) => {
-  return await Sweet.findByIdAndUpdate(id, data, { new: true });
+  return Sweet.findByIdAndUpdate(id, data, { new: true });
 };
 
 const deleteSweet = async (id) => {
-  return await Sweet.findByIdAndDelete(id);
+  return Sweet.findByIdAndDelete(id);
 };
 
 module.exports = {

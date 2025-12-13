@@ -17,6 +17,7 @@ describe("Auth Routes", () => {
       username: "test",
       email: "test@gmail.com",
       password: "pass123",
+      role: "user",
     });
 
     expect(res.statusCode).toBe(201);
@@ -27,6 +28,7 @@ describe("Auth Routes", () => {
     const res = await request(app).post("/api/auth/login").send({
       email: "test@gmail.com",
       password: "pass123",
+      role: "user",
     });
 
     expect(res.statusCode).toBe(200);

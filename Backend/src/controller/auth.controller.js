@@ -2,8 +2,8 @@ const { cookieOptions } = require("../config/cookie.config");
 const { registerUser, loginUser } = require("../services/auth.service");
 
 const register_user = async (req, res) => {
-  const { username, email, password } = req.body;
-  const { token, user } = await registerUser(username, email, password);
+  const { username, email, password, role } = req.body;
+  const { token, user } = await registerUser(username, email, password, role);
   req.user = user;
   res.cookie("accessToken", token, cookieOptions);
   res.status(201).json({ message: "User registered successfully"});

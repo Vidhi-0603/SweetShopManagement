@@ -6,6 +6,16 @@
  * - correct HTTP method
  * - correct status & response
  */
+jest.mock("../../src/middleware/auth.middleware", () => (req, res, next) => {
+  req.user = { id: "123", role: "admin" };
+  next();
+});
+
+jest.mock(
+  "../../src/middleware/admin.middleware",
+  () => (req, res, next) => next()
+);
+
 jest.mock("../../src/controller/sweet.controller", () => ({
   add_Sweet: (req, res) => res.status(201).json({ message: "Sweet added successfully" }),
 

@@ -3,28 +3,30 @@ const bcrypt = require("bcrypt");
 const { getJWTToken } = require("../utils/jwtToken.util");
 const userModel = require("../models/User.model");
 
-const registerUser = async (username, email, password) => {
-  const user = await findUserByEmail(email);
-  if (user) throw new Error("User already exists");
+const registerUser = async (username, email, password, role = "user") => {
+  const userExists = await findUserByEmail(email);
+  if (userExists) throw new Error("User already exists");
 
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  const new_user = new userModel({
+  const user = new userModel({
     username,
     email,
     password: hashedPassword,
+    role,
   });
-  await new_user.save();
+  await user.save();
 
-  const token = getJWTToken({ id: new_user._id });
+  const token = getJWTToken({ id: user._id, role: user.role });
 
   return {
     token,
     user: {
-      id: new_user._id,
-      username: new_user.username,
-      email: new_user.email,
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
     },
   };
 };
@@ -36,13 +38,14 @@ const loginUser = async (email, password) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error("Invalid credentials");
 
-  const token = getJWTToken({ id: user._id });
+  const token = getJWTToken({ id: user._id , role: user.role });
   return {
     token,
     user: {
       id: user._id,
       email: user.email,
       username: user.username,
+      role: user.role,
     },
   };
 };

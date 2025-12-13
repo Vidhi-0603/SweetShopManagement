@@ -18,6 +18,7 @@ jest.mock("../../../src/models/User.model", () => {
     _id: "123",
     username: "testUser",
     email: "test@gmail.com",
+    role: "user",
   }));
 });
 
@@ -40,7 +41,7 @@ describe("Auth Service", () => {
       bcrypt.hash.mockResolvedValue("hashedPassword");
       getJWTToken.mockReturnValue("jwtToken");
 
-      const res = await registerUser("testUser", "test@gmail.com", "pass123");
+      const res = await registerUser("testUser", "test@gmail.com", "pass123","user");
 
       expect(res).toEqual({
         token: "jwtToken",
@@ -48,6 +49,7 @@ describe("Auth Service", () => {
           id: "123",
           username: "testUser",
           email: "test@gmail.com",
+          role: "user",
         },
       });
     });
@@ -57,7 +59,6 @@ describe("Auth Service", () => {
         _id: "123",
         username: "testUser",
         email: "test@gmail.com",
-        password: "hashedPassword",
       });
 
       await expect(
@@ -73,6 +74,7 @@ describe("Auth Service", () => {
         username: "testUser",
         email: "test@gmail.com",
         password: "hashedPassword",
+        role: "user",
       });
 
       bcrypt.compare.mockResolvedValue(true);
@@ -86,6 +88,7 @@ describe("Auth Service", () => {
           id: "123",
           username: "testUser",
           email: "test@gmail.com",
+          role: "user",
         },
       });
     });
