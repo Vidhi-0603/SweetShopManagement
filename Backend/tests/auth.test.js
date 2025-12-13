@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../src/app");
+const app = require("../app.js");
 
 describe("User Authorization", () => {
   test("should register a new user", async () => {
