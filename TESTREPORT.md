@@ -68,15 +68,15 @@ Sweet Shop Management System
 
 ## Test Execution Summary
 
-PASS tests/unit/service/auth.service.test.js
-PASS tests/unit/service/sweet.service.test.js
-PASS tests/integration/auth.route.test.js
-PASS tests/integration/sweets.route.test.js
+- PASS tests/unit/service/auth.service.test.js
+- PASS tests/unit/service/sweet.service.test.js
+- PASS tests/integration/auth.route.test.js
+- PASS tests/integration/sweets.route.test.js
 
-Test Suites: 4 passed, 4 total
-Tests: 24 passed, 24 total
-Snapshots: 0 total
-Time: 1.777 s
+- Test Suites: 4 passed, 4 total
+- Tests: 24 passed, 24 total
+- Snapshots: 0 total
+- Time: 1.777 s
 
 
 ---
