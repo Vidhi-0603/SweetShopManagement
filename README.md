@@ -1,7 +1,7 @@
 # 🍬 Sweet Shop Management System 
 
-### View live: 
-![LiveLink](https://sweet-shop-management-ten.vercel.app/)
+### 
+[LiveLink](https://sweet-shop-management-ten.vercel.app/)
 
 ## 📌 Project Overview
 The **Sweet Shop Management System** is a full-stack web application designed to manage a sweet shop's operations efficiently. It allows users to browse available sweets, search and filter them, and purchase items based on availability. The system also supports **authentication and authorization**, distinguishing between **regular users** and **admin users**.
