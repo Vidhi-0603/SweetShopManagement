@@ -10,6 +10,7 @@ jest.mock("../../../src/utils/jwtToken.util", () => ({
 
 jest.mock("../../../src/dao/findUser", () => ({
   findUserByEmail: jest.fn(),
+  findUserById: jest.fn(),
 }));
 
 jest.mock("../../../src/models/User.model", () => {
@@ -26,9 +27,11 @@ const bcrypt = require("bcrypt");
 const {
   registerUser,
   loginUser,
+  authUser,
 } = require("../../../src/services/auth.service");
 const { getJWTToken } = require("../../../src/utils/jwtToken.util");
-const { findUserByEmail } = require("../../../src/dao/findUser");
+const { findUserByEmail, findUserById } = require("../../../src/dao/findUser");
+const userModel = require("../../../src/models/User.model");
 
 describe("Auth Service", () => {
   beforeEach(() => {
@@ -41,7 +44,12 @@ describe("Auth Service", () => {
       bcrypt.hash.mockResolvedValue("hashedPassword");
       getJWTToken.mockReturnValue("jwtToken");
 
-      const res = await registerUser("testUser", "test@gmail.com", "pass123","user");
+      const res = await registerUser(
+        "testUser",
+        "test@gmail.com",
+        "pass123",
+        "user"
+      );
 
       expect(res).toEqual({
         token: "jwtToken",
@@ -99,6 +107,44 @@ describe("Auth Service", () => {
       await expect(
         loginUser("test@gmail.com", "wrongPassword")
       ).rejects.toThrow("Invalid credentials");
+    });
+  });
+
+  describe("authUser service", () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    test("should return user when user exists", async () => {
+      const mockUser = {
+        _id: "123",
+        username: "testUser",
+        email: "test@gmail.com",
+        role: "user",
+      };
+
+      findUserById.mockResolvedValue(mockUser);
+
+      const result = await authUser("123");
+
+      expect(findUserById).toHaveBeenCalledWith("123");
+      expect(result).toEqual(mockUser);
+    });
+
+    test("should return null when user does not exist", async () => {
+      findUserById.mockResolvedValue(null);
+
+      const result = await authUser("123");
+
+      expect(findUserById).toHaveBeenCalledWith("123");
+      expect(result).toBeNull();
+    });
+
+    test("should throw error if DB fails", async () => {
+      const error = new Error("DB error");
+      findUserById.mockRejectedValue(error);
+
+      await expect(authUser("123")).rejects.toThrow("DB error");
     });
   });
 });

@@ -2,6 +2,13 @@ const request = require("supertest");
 jest.setTimeout(10000);
 
 // Mock controllers to avoid hitting real DB
+jest.mock("../../src/middleware/auth.middleware", () => {
+  return (req, res, next) => {
+    req.user = { id: "123", role: "user" };
+    next();
+  };
+});
+
 jest.mock("../../src/controller/auth.controller", () => ({
   register_user: (req, res) =>
     res.status(201).json({
@@ -16,6 +23,16 @@ jest.mock("../../src/controller/auth.controller", () => ({
   login_user: (req, res) =>
     res.status(200).json({
       message: "User login successfull",
+      user: {
+        id: "123",
+        username: "testUser",
+        email: "test@gmail.com",
+        role: "user",
+      },
+    }),
+
+  auth_user: (req, res) =>
+    res.status(200).json({
       user: {
         id: "123",
         username: "testUser",
@@ -57,6 +74,18 @@ describe("Auth Routes", () => {
     expect(res.body.message).toBe("User login successfull");
     expect(res.body.user).toBeDefined();
     expect(res.body.user).toMatchObject({
+      username: "testUser",
+      email: "test@gmail.com",
+      role: "user",
+    });
+  });
+
+  test("GET /api/auth/me returns authenticated user", async () => {
+    const res = await request(app).get("/api/auth/me");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.user).toMatchObject({
+      id: "123",
       username: "testUser",
       email: "test@gmail.com",
       role: "user",

@@ -8,4 +8,8 @@ const findUserByEmail = async (email, includePassword = false) => {
   return await userModel.findOne({ email });
 };
 
-module.exports = { findUserByEmail };
+const findUserById = async (id) => {
+  return await userModel.findById(id);
+}
+
+module.exports = { findUserByEmail, findUserById };

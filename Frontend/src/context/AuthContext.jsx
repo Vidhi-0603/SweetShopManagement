@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
+import axiosInstance from "../Utils/axiosInstance";
 
 const AuthContext = createContext();
 
@@ -19,6 +20,24 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    console.log("hi auth context");
+    
+    const fetchUser = async () => {
+      try {
+        const res = await axiosInstance.get("/auth/me");
+        console.log(res.data.user,"auth");
+        
+        setUser(res.data.user);
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}

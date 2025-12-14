@@ -1,4 +1,4 @@
-const { findUserByEmail } = require("../dao/findUser");
+const { findUserByEmail, findUserById } = require("../dao/findUser");
 const bcrypt = require("bcrypt");
 const { getJWTToken } = require("../utils/jwtToken.util");
 const userModel = require("../models/User.model");
@@ -50,4 +50,9 @@ const loginUser = async (email, password) => {
   };
 };
 
-module.exports = { registerUser, loginUser };
+const authUser = async (userId) => {
+  const user = await findUserById(userId);
+  return user;
+}
+
+module.exports = { registerUser, loginUser, authUser };
