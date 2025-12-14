@@ -4,7 +4,9 @@
   "description": "Sweet Shop Management backend",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node app.js",
+    "dev": "nodemon server.js"
   },
   "author": "Vidhilika",
   "license": "ISC",
@@ -12,11 +14,14 @@
     "@types/jest": "^30.0.0",
     "@types/supertest": "^6.0.3",
     "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.6"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
