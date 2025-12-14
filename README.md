@@ -57,7 +57,7 @@ This project was built as part of a technical assessment with a strong focus on:
 
 ### 📂 Clone the Repository
 ```bash
-git clone (https://github.com/Vidhi-0603/SweetShopManagement/)
+git clone https://github.com/Vidhi-0603/SweetShopManagement/
 cd SweetShopManagement
 ```
 
