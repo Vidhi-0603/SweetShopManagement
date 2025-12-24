@@ -1,4 +1,4 @@
-# 🍬 Sweet Shop Management System
+# 🍬 Sweet Shop Management System 
 
 ## 📌 Project Overview
 The **Sweet Shop Management System** is a full-stack web application designed to manage a sweet shop's operations efficiently. It allows users to browse available sweets, search and filter them, and purchase items based on availability. The system also supports **authentication and authorization**, distinguishing between **regular users** and **admin users**.
@@ -57,7 +57,7 @@ This project was built as part of a technical assessment with a strong focus on:
 
 ### 📂 Clone the Repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Vidhi-0603/SweetShopManagement/
 cd SweetShopManagement
 ```
 
