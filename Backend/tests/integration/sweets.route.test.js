@@ -1,11 +1,3 @@
-
-/**
- * Mock the controller functions
- * We ONLY check:
- * - correct route
- * - correct HTTP method
- * - correct status & response
- */
 jest.mock("../../src/middleware/auth.middleware", () => (req, res, next) => {
   req.user = { id: "123", role: "admin" };
   next();
