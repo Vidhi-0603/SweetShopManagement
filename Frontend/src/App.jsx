@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import DashboardPage from "./pages/DashboardPage";
 import { LoginPage } from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import {RegisterPage} from "./pages/RegisterPage";
 import { useAuth } from "./context/AuthContext";
 
 const App = () => {
