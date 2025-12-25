@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = ({ onNavigate }) => {
   const [email, setEmail] = useState("");

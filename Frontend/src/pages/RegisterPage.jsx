@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+
 const RegisterPage = ({ onNavigate }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
